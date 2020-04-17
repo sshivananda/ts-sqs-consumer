@@ -1,0 +1,41 @@
+{
+    "name": "ts-sqs-consumer",
+    "version": "1.0.0",
+    "description": "Typescript based SQS consumer",
+    "main": "dist/index.js",
+    "scripts": {
+        "tsc": "tsc",
+        "build": "npm run tsc --color=always",
+        "validate": "npm run build && tslint -p tsconfig.json",
+        "lint": "npm run build && tslint -p tsconfig.json -c tslint.json --format verbose",
+        "lint-fix": "tslint -p tsconfig.json --fix"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:sshivananda/ts-sqs-consumer.git"
+    },
+    "author": "sshivananda",
+    "license": "MIT",
+    "devDependencies": {
+        "husky": "^4.2.3",
+        "lint-staged": "^10.0.9",
+        "tslint": "^6.1.0",
+        "tslint-microsoft-contrib": "^6.1.1",
+        "tslint-no-unused-expression-chai": "^0.1.4"
+    },
+    "dependencies": {
+        "typescript": "^3.8.3"
+    },
+    "lint-staged": {
+        "*.{js,ts}": [
+            "npm run lint-fix",
+            "git add"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "pre-push": "npm run test --if-present"
+        }
+    }
+}
