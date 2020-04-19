@@ -6,9 +6,9 @@
     "scripts": {
         "tsc": "tsc",
         "build": "npm run tsc --color=always",
-        "validate": "npm run build && tslint -p tsconfig.json",
-        "lint": "npm run build && tslint -p tsconfig.json -c tslint.json --format verbose",
-        "lint-fix": "tslint -p tsconfig.json --fix"
+        "validate": "npm run build && eslint -c .eslintrc.js --ext .ts .",
+        "lint": "npm run build && eslint -c .eslintrc.js --ext .ts .",
+        "lint-fix": "eslint -c .eslintrc.js --ext .ts . --fix"
     },
     "repository": {
         "type": "git",
@@ -17,13 +17,13 @@
     "author": "sshivananda",
     "license": "MIT",
     "devDependencies": {
-        "husky": "^4.2.3",
-        "lint-staged": "^10.0.9",
-        "tslint": "^6.1.0",
-        "tslint-microsoft-contrib": "^6.1.1",
-        "tslint-no-unused-expression-chai": "^0.1.4"
-    },
-    "dependencies": {
+        "@types/node": "^13.11.1",
+        "@typescript-eslint/eslint-plugin": "^2.28.0",
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-typescript": "^7.2.1",
+        "eslint-plugin-import": "^2.20.2",
+        "husky": "^4.2.5",
+        "lint-staged": "^10.1.4",
         "typescript": "^3.8.3"
     },
     "lint-staged": {
@@ -37,5 +37,8 @@
             "pre-commit": "lint-staged",
             "pre-push": "npm run test --if-present"
         }
+    },
+    "dependencies": {
+        "winston": "^3.2.1"
     }
 }
