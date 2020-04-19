@@ -17,19 +17,24 @@ export default class SQSConsumer {
   // sets log level for the package
   private logLevel: string = 'debug';
 
-  constructor(options: SQSConsumerOptions) {
-    if (options.logOptions.customLogger != null) {
+  constructor(options?: SQSConsumerOptions) {
+    if (options != null
+      && options.logOptions != null
+      && options.logOptions.verbose === true) {
+      this.logLevel = 'info';
+    }
+    if (options != null
+      && options.logOptions != null
+      && options.logOptions.customLogger != null) {
       this.logger = options.logOptions.customLogger;
     } else {
-      if (options.logOptions.verbose === true) {
-        this.logLevel = 'info';
-      }
       this.logger = winston.createLogger({
         level: this.logLevel,
         format: winston.format.json(),
       });
     }
-    if (options.maxSearches != null) {
+    if (options != null
+      && options.maxSearches != null) {
       this.maxSearches = options.maxSearches;
     }
   }

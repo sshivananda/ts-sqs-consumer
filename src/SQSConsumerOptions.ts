@@ -1,6 +1,6 @@
 import { LoggerOptions } from './LoggerOptions';
 
 export type SQSConsumerOptions = {
-  logOptions: LoggerOptions;
+  logOptions?: LoggerOptions;
   maxSearches?: number;
 };
