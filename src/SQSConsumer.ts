@@ -1,4 +1,4 @@
-import * as winston from 'winston';
+import winston from 'winston';
 
 import { SQSConsumerOptions } from './SQSConsumerOptions';
 
@@ -31,6 +31,9 @@ export default class SQSConsumer {
       this.logger = winston.createLogger({
         level: this.logLevel,
         format: winston.format.json(),
+        transports: [
+          new winston.transports.Console(),
+        ],
       });
     }
     if (options != null
