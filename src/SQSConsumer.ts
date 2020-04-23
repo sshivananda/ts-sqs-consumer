@@ -43,9 +43,9 @@ export default class SQSConsumer {
   }
 
   /**
-     * processPendingJobs
-     * Polls for pending jobs and processes them
-     */
+   * processPendingJobs
+   * Polls for pending jobs and processes them
+   */
   public async processPendingJobs(): Promise<number> {
     let searchCounter = 0;
     while (searchCounter !== this.maxSearches) {
