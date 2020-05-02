@@ -45,9 +45,11 @@ jobs:
         CI: true
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@master
+      if: ${{ runner.os == 'Linux' }}
       with:
         output: reports
     - uses: actions/upload-artifact@v1
+      if: ${{ runner.os == 'Linux' }}
       with:
         name: reports
         path: reports
