@@ -69,7 +69,9 @@ describe('SQSConsumer', (): void => {
     it('should be able to create a new object of SQSConsumer with max searches set', async (): Promise<void> => {
       expect(
         (): SQSConsumer => new SQSConsumer({
-          maxSearches: 10,
+          sqsOptions: {
+            maxSearches: 10,
+          },
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);

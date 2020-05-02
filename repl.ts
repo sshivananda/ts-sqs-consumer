@@ -21,7 +21,9 @@ import { SQSConsumer, SQSConsumerOptions } from './index';
 async function testSQSConsumer(): Promise<void> {
   const sqsConsumerOpts: SQSConsumerOptions = {
     logOptions: {},
-    maxSearches: 5,
+    sqsOptions: {
+      maxSearches: 5,
+    },
   };
   const tsSQSConsumer: SQSConsumer = new SQSConsumer(sqsConsumerOpts);
   await tsSQSConsumer
