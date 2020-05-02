@@ -49,6 +49,7 @@
         }
     },
     "dependencies": {
+        "aws-sdk": "^2.668.0",
         "winston": "^3.2.1"
     }
 }
