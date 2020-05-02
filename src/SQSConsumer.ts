@@ -41,11 +41,6 @@ export default class SQSConsumer {
         });
         break;
     }
-
-    if (options != null
-      && options.sqsOptions.maxSearches != null) {
-      this.maxSearches = options.sqsOptions.maxSearches;
-    }
   }
 
   /**

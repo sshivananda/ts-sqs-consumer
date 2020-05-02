@@ -22,7 +22,16 @@ async function testSQSConsumer(): Promise<void> {
   const sqsConsumerOpts: SQSConsumerOptions = {
     logOptions: {},
     sqsOptions: {
-      maxSearches: 5,
+      clientOptions: {
+        region: 'region-that-does-not-exist',
+      },
+      receiveMessageOptions: {
+        queueUrl: 'url-that-does-not-exist',
+        visibilityTimeout: -1,
+        waitTimeSeconds: -1,
+        maxNumberOfMessages: -1,
+        stopAtFirstError: false,
+      },
     },
   };
   const tsSQSConsumer: SQSConsumer = new SQSConsumer(sqsConsumerOpts);

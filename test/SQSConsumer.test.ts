@@ -3,6 +3,7 @@ import * as sinon from 'sinon';
 
 import SQSConsumer from '../src/SQSConsumer';
 import LogLevels from '../src/logger/LogLevels';
+import { SQSOptions } from '../src/sqs/SQSOptions';
 
 describe('SQSConsumer', (): void => {
   const logger: winston.Logger = winston.createLogger({
@@ -11,6 +12,18 @@ describe('SQSConsumer', (): void => {
       new winston.transports.Console(),
     ],
   });
+  const sqsConsumerOpts: SQSOptions = {
+    clientOptions: {
+      region: 'region-that-does-not-exist',
+    },
+    receiveMessageOptions: {
+      queueUrl: 'url-that-does-not-exist',
+      visibilityTimeout: -1,
+      waitTimeSeconds: -1,
+      maxNumberOfMessages: -1,
+      stopAtFirstError: false,
+    },
+  };
 
   describe('Object creation', (): void => {
     let createLoggerStub: sinon.SinonSpy;
@@ -26,7 +39,7 @@ describe('SQSConsumer', (): void => {
     it('should be able to create a new object of SQSConsumer with default options', async (): Promise<void> => {
       expect(
         (): SQSConsumer => new SQSConsumer({
-          sqsOptions: {},
+          sqsOptions: sqsConsumerOpts,
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -39,7 +52,7 @@ describe('SQSConsumer', (): void => {
           logOptions: {
             logLevel: LogLevels.info,
           },
-          sqsOptions: {},
+          sqsOptions: sqsConsumerOpts,
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -52,7 +65,7 @@ describe('SQSConsumer', (): void => {
           logOptions: {
             logLevel: LogLevels.debug,
           },
-          sqsOptions: {},
+          sqsOptions: sqsConsumerOpts,
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -65,7 +78,7 @@ describe('SQSConsumer', (): void => {
           logOptions: {
             customLogger: logger,
           },
-          sqsOptions: {},
+          sqsOptions: sqsConsumerOpts,
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(0);
@@ -75,7 +88,11 @@ describe('SQSConsumer', (): void => {
       expect(
         (): SQSConsumer => new SQSConsumer({
           sqsOptions: {
-            maxSearches: 10,
+            ...sqsConsumerOpts,
+            clientOptions: {
+              ...sqsConsumerOpts.clientOptions,
+              maxSearches: 10,
+            },
           },
         }),
       ).not.toThrowError();
@@ -90,7 +107,7 @@ describe('SQSConsumer', (): void => {
             logLevel: LogLevels.info,
             customLogger: logger,
           },
-          sqsOptions: {},
+          sqsOptions: sqsConsumerOpts,
         }),
       ).toThrowError();
       expect(createLoggerStub.callCount).toBe(0);

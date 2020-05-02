@@ -1,10 +1,7 @@
-import { SQS } from 'aws-sdk';
+import { CustomSQSOptions } from './CustomSQSOptions';
+import { CustomSQS } from './CustomSQS';
+import { ReceiveMessageOptions } from './ReceiveMessageOptions';
 
-export type SQSOptions = {
-  maxSearches?: number;
-  region?: string;
-  queueUrl?: string;
-  waitTimeSeconds?: number;
-  visibilityTimeout?: number;
-  sqsObj?: SQS;
+export type SQSOptions = (CustomSQSOptions | CustomSQS) & {
+  receiveMessageOptions: ReceiveMessageOptions;
 };
