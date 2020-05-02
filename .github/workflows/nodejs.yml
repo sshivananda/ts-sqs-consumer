@@ -47,7 +47,7 @@ jobs:
       uses: AppThreat/sast-scan-action@master
       if: ${{ runner.os == 'Linux' }}
       with:
-        src: /dist
+        src: /github/workspace/dist
         output: reports
     - uses: actions/upload-artifact@v1
       if: ${{ runner.os == 'Linux' }}
