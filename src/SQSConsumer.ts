@@ -32,7 +32,6 @@ export default class SQSConsumer {
     }
 
     if (options != null
-      && options.sqsOptions != null
       && options.sqsOptions.maxSearches != null) {
       this.maxSearches = options.sqsOptions.maxSearches;
     }
