@@ -43,7 +43,7 @@ jobs:
     - run: npm run coverage
       env:
         CI: true
-    - name: Self sast-scan
+    - name: Self sast-scan NodeJS
       uses: AppThreat/sast-scan-action@master
       if: ${{ runner.os == 'Linux' }}
       with:
