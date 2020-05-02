@@ -82,5 +82,18 @@ describe('SQSConsumer', (): void => {
       expect(createLoggerStub.callCount).toBe(1);
       expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
     });
+
+    it('should error out if both custom logger and logger options are passed', async (): Promise<void> => {
+      expect(
+        (): SQSConsumer => new SQSConsumer({
+          logOptions: {
+            logLevel: LogLevels.info,
+            customLogger: logger,
+          },
+          sqsOptions: {},
+        }),
+      ).toThrowError();
+      expect(createLoggerStub.callCount).toBe(0);
+    });
   });
 });

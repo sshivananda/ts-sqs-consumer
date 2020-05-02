@@ -17,20 +17,29 @@ export default class SQSConsumer {
   private readonly maxSearches: number = -1;
 
   constructor(options?: SQSConsumerOptions) {
-    if (options != null
-      && options.logOptions != null
-      && (options.logOptions as CustomLogger).customLogger != null) {
-      this.logger = (options.logOptions as CustomLogger).customLogger;
-    } else {
-      let logLevel: LogLevels = LogLevels.debug;
-      if (options != null
+    switch (true) {
+      case (options != null
         && options.logOptions != null
-        && (options.logOptions as CustomLogOptions).logLevel != null) {
-        logLevel = (options.logOptions as CustomLogOptions).logLevel!;
-      }
-      this.logger = new Logger({
-        logLevel: logLevel,
-      });
+        && (options.logOptions as CustomLogOptions).logLevel != null
+        && (options.logOptions as CustomLogger).customLogger != null):
+        throw new Error('Either logLevel or customLogger should be specified - but not both.');
+      case (options != null
+        && options.logOptions != null
+        && (options.logOptions as CustomLogger).customLogger != null):
+        this.logger = (options!.logOptions as CustomLogger).customLogger;
+        break;
+      case (options != null
+        && options.logOptions != null
+        && (options.logOptions as CustomLogOptions).logLevel != null):
+        this.logger = new Logger({
+          logLevel: (options!.logOptions as CustomLogOptions).logLevel,
+        });
+        break;
+      default:
+        this.logger = new Logger({
+          logLevel: LogLevels.debug,
+        });
+        break;
     }
 
     if (options != null
