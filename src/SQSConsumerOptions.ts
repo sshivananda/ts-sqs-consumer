@@ -1,4 +1,4 @@
-import { LoggerOptions } from './LoggerOptions';
+import { LoggerOptions } from './logger/LoggerOptions';
 
 export type SQSConsumerOptions = {
   logOptions?: LoggerOptions;
