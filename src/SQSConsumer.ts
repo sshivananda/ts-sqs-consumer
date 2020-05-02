@@ -1,27 +1,28 @@
 import winston from 'winston';
 
 import { SQSConsumerOptions } from './SQSConsumerOptions';
+import { ILogger } from './logger/ILogger';
+import LogLevels from './logger/LogLevels';
 
 /**
- * SQSConsumer
  * Contains functionality to manage different components that
- * consume and delete messages from SQS
+ * consume and delete messages from SQS.
  */
 export default class SQSConsumer {
   // Instance of a logger object
-  private readonly logger: winston.Logger;
+  private readonly logger: ILogger;
 
   // max searches config - defaults to -1
   private readonly maxSearches: number = -1;
 
   // sets log level for the package
-  private logLevel: string = 'debug';
+  private logLevel: LogLevels = LogLevels.debug;
 
   constructor(options?: SQSConsumerOptions) {
     if (options != null
       && options.logOptions != null
       && options.logOptions.verbose === true) {
-      this.logLevel = 'info';
+      this.logLevel = LogLevels.info;
     }
     if (options != null
       && options.logOptions != null
@@ -43,8 +44,7 @@ export default class SQSConsumer {
   }
 
   /**
-   * processPendingJobs
-   * Polls for pending jobs and processes them
+   * Polls for pending jobs and processes them.
    */
   public async processPendingJobs(): Promise<number> {
     let searchCounter = 0;

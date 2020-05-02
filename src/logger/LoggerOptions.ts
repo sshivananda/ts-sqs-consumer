@@ -1,6 +1,6 @@
-import * as winston from 'winston';
+import { ILogger } from './ILogger';
 
 export type LoggerOptions = {
-  customLogger?: winston.Logger;
+  customLogger?: ILogger;
   verbose?: boolean;
 };
