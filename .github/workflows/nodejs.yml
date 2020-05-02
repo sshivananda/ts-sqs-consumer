@@ -46,6 +46,7 @@ jobs:
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@master
       if: ${{ runner.os == 'Linux' }}
+      src: dist
       with:
         output: reports
     - uses: actions/upload-artifact@v1
