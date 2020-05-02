@@ -25,7 +25,9 @@ describe('SQSConsumer', (): void => {
 
     it('should be able to create a new object of SQSConsumer with default options', async (): Promise<void> => {
       expect(
-        (): SQSConsumer => new SQSConsumer({}),
+        (): SQSConsumer => new SQSConsumer({
+          sqsOptions: {},
+        }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
       expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
@@ -37,6 +39,7 @@ describe('SQSConsumer', (): void => {
           logOptions: {
             logLevel: LogLevels.info,
           },
+          sqsOptions: {},
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -49,6 +52,7 @@ describe('SQSConsumer', (): void => {
           logOptions: {
             logLevel: LogLevels.debug,
           },
+          sqsOptions: {},
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -61,6 +65,7 @@ describe('SQSConsumer', (): void => {
           logOptions: {
             customLogger: logger,
           },
+          sqsOptions: {},
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(0);
