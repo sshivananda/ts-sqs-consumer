@@ -2,6 +2,7 @@ import winston from 'winston';
 import * as sinon from 'sinon';
 
 import SQSConsumer from '../src/SQSConsumer';
+import LogLevels from '../src/logger/LogLevels';
 
 describe('SQSConsumer', (): void => {
   const logger: winston.Logger = winston.createLogger({
@@ -30,16 +31,28 @@ describe('SQSConsumer', (): void => {
       expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
     });
 
-    it('should be able to create a new object of SQSConsumer with verbosity set', async (): Promise<void> => {
+    it('should be able to create a new object of SQSConsumer with log level set to info', async (): Promise<void> => {
       expect(
         (): SQSConsumer => new SQSConsumer({
           logOptions: {
-            verbose: true,
+            logLevel: LogLevels.info,
           },
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
       expect(createLoggerStub.getCalls()[0].args[0].level).toBe('info');
+    });
+
+    it('should be able to create a new object of SQSConsumer with log level set to debug', async (): Promise<void> => {
+      expect(
+        (): SQSConsumer => new SQSConsumer({
+          logOptions: {
+            logLevel: LogLevels.debug,
+          },
+        }),
+      ).not.toThrowError();
+      expect(createLoggerStub.callCount).toBe(1);
+      expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
     });
 
     it('should be able to create a new object of SQSConsumer with custom logger', async (): Promise<void> => {

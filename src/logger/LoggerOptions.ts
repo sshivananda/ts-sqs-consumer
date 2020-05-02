@@ -1,6 +1,7 @@
 import { ILogger } from './ILogger';
+import LogLevels from './LogLevels';
 
 export type LoggerOptions = {
   customLogger?: ILogger;
-  verbose?: boolean;
+  logLevel?: LogLevels;
 };
