@@ -2,7 +2,7 @@ import { LoggerOptions } from './logger/LoggerOptions';
 
 export type SQSConsumerOptions = {
   logOptions?: LoggerOptions;
-  sqsOptions?: {
+  sqsOptions: {
     maxSearches?: number;
     region?: string;
     queueUrl?: string;
