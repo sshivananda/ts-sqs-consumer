@@ -1,7 +1,5 @@
-import { ILogger } from './ILogger';
-import LogLevels from './LogLevels';
+import { CustomLogger } from './CustomLogger';
+import { CustomLogOptions } from './CustomLogOptions';
 
-export type LoggerOptions = {
-  customLogger?: ILogger;
-  logLevel?: LogLevels;
-};
+
+export type LoggerOptions = CustomLogger | CustomLogOptions;

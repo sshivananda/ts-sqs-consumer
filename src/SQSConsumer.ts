@@ -1,6 +1,8 @@
 import { SQSConsumerOptions } from './SQSConsumerOptions';
-import { ILogger } from './logger/ILogger';
 import LogLevels from './logger/LogLevels';
+import { CustomLogger } from './logger/CustomLogger';
+import { ILogger } from './logger/ILogger';
+import { CustomLogOptions } from './logger/CustomLogOptions';
 import Logger from './logger/Logger';
 
 /**
@@ -17,14 +19,14 @@ export default class SQSConsumer {
   constructor(options?: SQSConsumerOptions) {
     if (options != null
       && options.logOptions != null
-      && options.logOptions.customLogger != null) {
-      this.logger = options.logOptions.customLogger;
+      && (options.logOptions as CustomLogger).customLogger != null) {
+      this.logger = (options.logOptions as CustomLogger).customLogger;
     } else {
       let logLevel: LogLevels = LogLevels.debug;
       if (options != null
         && options.logOptions != null
-        && options.logOptions.logLevel != null) {
-        logLevel = options.logOptions.logLevel;
+        && (options.logOptions as CustomLogOptions).logLevel != null) {
+        logLevel = (options.logOptions as CustomLogOptions).logLevel!;
       }
       this.logger = new Logger({
         logLevel: logLevel,
