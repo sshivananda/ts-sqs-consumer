@@ -1,5 +1,4 @@
-import * as AWS from 'aws-sdk';
-
+import { SQS } from 'aws-sdk';
 
 import { SQSOptions } from '../sqs/SQSOptions';
 import { CustomSQSOptions } from '../sqs/CustomSQSOptions';
@@ -18,7 +17,7 @@ export default class MessageProcessor<T extends SQSMessage> {
   private readonly logger: ILogger;
 
   // Instance of a SQS object
-  private sqsClient: AWS.SQS;
+  private sqsClient: SQS;
 
   private readonly receiveMessageOptions: ReceiveMessageOptions;
 
@@ -41,12 +40,12 @@ export default class MessageProcessor<T extends SQSMessage> {
         && options.sqsOptions != null
         && (options.sqsOptions as CustomSQSOptions) != null):
         this.logger.log('Creating new obj');
-        this.sqsClient = new AWS.SQS({
+        this.sqsClient = new SQS({
           region: (options.sqsOptions as CustomSQSOptions).clientOptions.region,
         });
         break;
       default:
-        this.sqsClient = new AWS.SQS();
+        this.sqsClient = new SQS();
         break;
     }
 

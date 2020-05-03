@@ -1,5 +1,4 @@
 import * as AWSMock from 'aws-sdk-mock';
-import * as AWS from 'aws-sdk';
 import * as sinon from 'sinon';
 
 import MessageProcessor from '../../src/message-processor/MessageProcessor';
@@ -37,13 +36,11 @@ describe('MessageProcessor', (): void => {
   };
 
   describe('getMessage', (): void => {
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should retreive a message when one is available', async (): Promise<void> => {
-      AWSMock.setSDKInstance(AWS);
+    it('should retreive a message when one is available', async (): Promise<void> => {
       const receiveWithMessage: sinon.SinonSpy = sinon.spy((params: any, callback: any): void => {
         callback(undefined, {
           Messages: [{
-            Body: JSON.stringify(data),
+            Body: JSON.stringify(sampleMessage),
             ReceiptHandle: messageHandle,
           }],
         });
@@ -55,9 +52,9 @@ describe('MessageProcessor', (): void => {
       });
       const messages: SampleMessageType[] | undefined = await messageProcessor.getMessages();
       expect(messages)
-        .toStrictEqual([{
+        .toStrictEqual([
           sampleMessage,
-        }]);
+        ]);
     });
   });
 });
