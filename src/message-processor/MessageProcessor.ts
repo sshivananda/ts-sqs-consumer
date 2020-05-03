@@ -39,7 +39,6 @@ export default class MessageProcessor<T extends SQSMessage> {
       case (options != null
         && options.sqsOptions != null
         && (options.sqsOptions as CustomSQSOptions) != null):
-        this.logger.log('Creating new obj');
         this.sqsClient = new SQS({
           region: (options.sqsOptions as CustomSQSOptions).clientOptions.region,
         });
