@@ -7,7 +7,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-new */
 
-import { SQSConsumer, SQSConsumerOptions } from './index';
+import { SQSConsumer } from './index';
 
 /**
  * This script acts as a consumer for the code in this repository.
@@ -19,8 +19,11 @@ import { SQSConsumer, SQSConsumerOptions } from './index';
  * Provides sample usage of the sqs consumer.
  */
 async function testSQSConsumer(): Promise<void> {
-  const sqsConsumerOpts: SQSConsumerOptions = {
-    logOptions: {},
+  type TestMessageType = {
+    orderId: string;
+    handle: string;
+  };
+  const tsSQSConsumer: SQSConsumer<TestMessageType> = new SQSConsumer({
     sqsOptions: {
       clientOptions: {
         region: 'region-that-does-not-exist',
@@ -33,13 +36,6 @@ async function testSQSConsumer(): Promise<void> {
         stopAtFirstError: false,
       },
     },
-  };
-  type TestMessageType = {
-    orderId: string;
-    handle: string;
-  };
-  const tsSQSConsumer: SQSConsumer<TestMessageType> = new SQSConsumer({
-    ...sqsConsumerOpts,
     jobProcessor: (async (message: TestMessageType) => {
       console.log('Got message');
       console.log(message);
