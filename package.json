@@ -1,0 +1,59 @@
+{
+    "name": "ts-sqs-consumer",
+    "version": "1.0.0",
+    "description": "Typescript based SQS consumer",
+    "main": "dist/index.js",
+    "scripts": {
+        "tsc": "tsc",
+        "build": "npm run tsc --color=always",
+        "validate": "npm run build && eslint -c .eslintrc.js --ext .ts .",
+        "lint": "npm run build && eslint -c .eslintrc.js --ext .ts .",
+        "lint-fix": "eslint -c .eslintrc.js --ext .ts . --fix",
+        "test": "jest --color=always",
+        "coverage": "jest --color=always --coverage"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:sshivananda/ts-sqs-consumer.git"
+    },
+    "author": "sshivananda",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/jest": "^25.2.1",
+        "@types/node": "^13.13.2",
+        "@types/sinon": "^9.0.0",
+        "@types/uuid": "^7.0.3",
+        "@typescript-eslint/eslint-plugin": "^2.29.0",
+        "aws-sdk-mock": "^5.1.0",
+        "codeclimate-test-reporter": "^0.5.1",
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-typescript": "^7.2.1",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-jest": "^23.8.2",
+        "eslint-plugin-security": "^1.4.0",
+        "husky": "^4.2.5",
+        "jest": "^25.4.0",
+        "lint-staged": "^10.1.7",
+        "sinon": "^9.0.2",
+        "ts-jest": "^25.4.0",
+        "ts-node": "^8.9.1",
+        "typescript": "^3.8.3"
+    },
+    "lint-staged": {
+        "*.{js,ts}": [
+            "npm run lint-fix",
+            "git add"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "pre-push": "npm run test --if-present"
+        }
+    },
+    "dependencies": {
+        "aws-sdk": "^2.668.0",
+        "uuid": "^8.0.0",
+        "winston": "^3.2.1"
+    }
+}

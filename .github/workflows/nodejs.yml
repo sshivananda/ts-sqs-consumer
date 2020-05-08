@@ -15,20 +15,45 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        node-version: [10.x, 12.x, 13.x]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Get npm cache directory
+      id: npm-cache
+      run: |
+        echo "::set-output name=dir::$(npm config get cache)"
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm run build
+    - uses: paambaati/codeclimate-action@v2.6.0
       env:
-        CI: true
+        CC_TEST_REPORTER_ID: 2925ff1d6bb4dc3c921187525d6424bb0c446b0ba977a58d08cdb7cc46da8912
+      with:
+        coverageCommand: npm run coverage
+    - name: Self sast-scan NodeJS
+      uses: AppThreat/sast-scan-action@master
+      if: ${{ runner.os == 'Linux' }}
+      with:
+        src: "/github/workspace/dist"
+        output: "/github/workspace/reports"
+        type: nodejs
+    - uses: actions/upload-artifact@v1
+      if: ${{ runner.os == 'Linux' }}
+      with:
+        name: reports
+        path: reports
