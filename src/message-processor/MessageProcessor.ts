@@ -1,4 +1,5 @@
 import { SQS } from 'aws-sdk';
+import { v4 as uuidv4 } from 'uuid';
 
 import { SQSOptions } from '../sqs/SQSOptions';
 import { CustomSQSOptions } from '../sqs/CustomSQSOptions';
@@ -96,15 +97,22 @@ export default class MessageProcessor<T extends SQSMessage> {
    * markMessageAsProcessed
    * Marks a message as processed
    */
-  public async markMessageAsProcessed(options: {
-    message: T;
+  public async markMessagesAsProcessed(options: {
+    messages: T[];
   }): Promise<boolean> {
+    const deleteMessageRequest: AWS.SQS.DeleteMessageBatchRequest = {
+      QueueUrl: this.receiveMessageOptions.queueUrl,
+      Entries: [],
+    };
+    for (const message of options.messages) {
+      deleteMessageRequest.Entries.push({
+        Id: uuidv4(),
+        ReceiptHandle: message.handle,
+      });
+    }
     await this
       .sqsClient
-      .deleteMessage({
-        QueueUrl: this.receiveMessageOptions.queueUrl,
-        ReceiptHandle: options.message.handle,
-      })
+      .deleteMessageBatch(deleteMessageRequest)
       .promise()
       .catch((err: Error): void => {
         throw err;

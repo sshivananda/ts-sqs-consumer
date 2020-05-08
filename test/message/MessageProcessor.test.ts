@@ -36,6 +36,10 @@ describe('MessageProcessor', (): void => {
   };
 
   describe('getMessage', (): void => {
+    afterEach((): void => {
+      AWSMock.restore('SQS', 'receiveMessage');
+    });
+
     it('should retreive a message when one is available', async (): Promise<void> => {
       const receiveWithMessage: sinon.SinonSpy = sinon.spy((params: any, callback: any): void => {
         callback(undefined, {
@@ -55,6 +59,22 @@ describe('MessageProcessor', (): void => {
         .toStrictEqual([
           sampleMessage,
         ]);
+    });
+
+    it('should return an empty array when no messages are available', async (): Promise<void> => {
+      const receieveWithNoMsgs: sinon.SinonSpy = sinon.spy((params: any, callback: any): void => {
+        callback(undefined, {
+          Messages: [],
+        });
+      });
+      AWSMock.mock('SQS', 'receiveMessage', receieveWithNoMsgs);
+      const messageProcessor: MessageProcessor<SampleMessageType> = new MessageProcessor({
+        logger: loggerObj,
+        sqsOptions: sqsConsumerOpts,
+      });
+      const messages: SampleMessageType[] | undefined = await messageProcessor.getMessages();
+      expect(messages)
+        .toStrictEqual([]);
     });
   });
 });
