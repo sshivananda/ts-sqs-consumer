@@ -26,15 +26,25 @@ async function testSQSConsumer(): Promise<void> {
         region: 'region-that-does-not-exist',
       },
       receiveMessageOptions: {
-        queueUrl: 'url-that-does-not-exist',
-        visibilityTimeout: -1,
-        waitTimeSeconds: -1,
-        maxNumberOfMessages: -1,
+        queueUrl: 'url-of-your-queue',
+        visibilityTimeout: 1800,
+        waitTimeSeconds: 20,
+        maxNumberOfMessages: 1,
         stopAtFirstError: false,
       },
     },
   };
-  const tsSQSConsumer: SQSConsumer = new SQSConsumer(sqsConsumerOpts);
+  type TestMessageType = {
+    orderId: string;
+    handle: string;
+  };
+  const tsSQSConsumer: SQSConsumer<TestMessageType> = new SQSConsumer({
+    ...sqsConsumerOpts,
+    jobProcessor: (async (message: TestMessageType) => {
+      console.log('Got message');
+      console.log(message);
+    }),
+  });
   await tsSQSConsumer
     .processPendingJobs()
     .catch((err: Error): void => {
