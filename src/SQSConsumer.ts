@@ -20,7 +20,11 @@ export default class SQSConsumer<T extends SQSMessage> {
 
   private messageProcessor: MessageProcessor<T>;
 
-  constructor(options: SQSConsumerOptions) {
+  private jobProcessor: ((message: T) => Promise<void>);
+
+  constructor(options: SQSConsumerOptions & {
+    jobProcessor: ((message: T) => Promise<void>)
+  }) {
     switch (true) {
       case (options != null
         && options.logOptions != null
@@ -50,6 +54,7 @@ export default class SQSConsumer<T extends SQSMessage> {
       logger: this.logger,
       sqsOptions: options.sqsOptions,
     });
+    this.jobProcessor = options.jobProcessor;
   }
 
   /**
@@ -66,8 +71,14 @@ export default class SQSConsumer<T extends SQSMessage> {
           .catch((err: Error): void => {
             throw err;
           });
-        if (messages) {
-          this.logger.log(JSON.stringify(messages));
+        if (messages && messages.length > 0) {
+          for (const message of messages) {
+            await this
+              .jobProcessor(message)
+              .catch((err: Error): void => {
+                throw err;
+              });
+          }
           await this.messageProcessor.markMessagesAsProcessed({
             messages: messages,
           }).catch((err: Error): void => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import winston from 'winston';
 import * as sinon from 'sinon';
 
@@ -40,6 +41,9 @@ describe('SQSConsumer', (): void => {
       expect(
         (): SQSConsumer<any> => new SQSConsumer({
           sqsOptions: sqsConsumerOpts,
+          jobProcessor: (async (message: any) => {
+            console.log(message);
+          }),
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -53,6 +57,9 @@ describe('SQSConsumer', (): void => {
             logLevel: LogLevels.info,
           },
           sqsOptions: sqsConsumerOpts,
+          jobProcessor: (async (message: any) => {
+            console.log(message);
+          }),
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -66,6 +73,9 @@ describe('SQSConsumer', (): void => {
             logLevel: LogLevels.debug,
           },
           sqsOptions: sqsConsumerOpts,
+          jobProcessor: (async (message: any) => {
+            console.log(message);
+          }),
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -79,6 +89,9 @@ describe('SQSConsumer', (): void => {
             customLogger: logger,
           },
           sqsOptions: sqsConsumerOpts,
+          jobProcessor: (async (message: any) => {
+            console.log(message);
+          }),
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(0);
@@ -94,6 +107,9 @@ describe('SQSConsumer', (): void => {
               maxSearches: 10,
             },
           },
+          jobProcessor: (async (message: any) => {
+            console.log(message);
+          }),
         }),
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
@@ -108,6 +124,9 @@ describe('SQSConsumer', (): void => {
             customLogger: logger,
           },
           sqsOptions: sqsConsumerOpts,
+          jobProcessor: (async (message: any) => {
+            console.log(message);
+          }),
         }),
       ).toThrowError();
       expect(createLoggerStub.callCount).toBe(0);
