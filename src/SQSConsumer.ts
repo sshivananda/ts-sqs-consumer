@@ -4,19 +4,23 @@ import { CustomLogger } from './logger/CustomLogger';
 import { ILogger } from './logger/ILogger';
 import { CustomLogOptions } from './logger/CustomLogOptions';
 import Logger from './logger/Logger';
+import { SQSMessage } from './message-processor/SQSMessage';
+import MessageProcessor from './message-processor/MessageProcessor';
 
 /**
  * Contains functionality to manage different components that
  * consume and delete messages from SQS.
  */
-export default class SQSConsumer {
+export default class SQSConsumer<T extends SQSMessage> {
   // Instance of a logger object
   private readonly logger: ILogger;
 
   // max searches config - defaults to -1
   private readonly maxSearches: number = -1;
 
-  constructor(options?: SQSConsumerOptions) {
+  private messageProcessor: MessageProcessor<T>;
+
+  constructor(options: SQSConsumerOptions) {
     switch (true) {
       case (options != null
         && options.logOptions != null
@@ -41,6 +45,11 @@ export default class SQSConsumer {
         });
         break;
     }
+
+    this.messageProcessor = new MessageProcessor<T>({
+      logger: this.logger,
+      sqsOptions: options.sqsOptions,
+    });
   }
 
   /**
@@ -51,6 +60,20 @@ export default class SQSConsumer {
     while (searchCounter !== this.maxSearches) {
       try {
         this.logger.log('Searching for sqs messages');
+        const messages: T[] | void = await this
+          .messageProcessor
+          .getMessages()
+          .catch((err: Error): void => {
+            throw err;
+          });
+        if (messages) {
+          this.logger.log(JSON.stringify(messages));
+          await this.messageProcessor.markMessagesAsProcessed({
+            messages: messages,
+          }).catch((err: Error): void => {
+            throw err;
+          });
+        }
       } finally {
         searchCounter += 1;
       }

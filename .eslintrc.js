@@ -14,6 +14,7 @@ module.exports = {
   },
   rules: {
     'object-shorthand' : 0,
+    'no-await-in-loop': 0,
     // Overriding restricted syntax rule to remove for of from the blacklist
     'no-restricted-syntax': [
       'error',

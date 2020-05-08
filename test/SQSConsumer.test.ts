@@ -38,7 +38,7 @@ describe('SQSConsumer', (): void => {
 
     it('should be able to create a new object of SQSConsumer with default options', async (): Promise<void> => {
       expect(
-        (): SQSConsumer => new SQSConsumer({
+        (): SQSConsumer<any> => new SQSConsumer({
           sqsOptions: sqsConsumerOpts,
         }),
       ).not.toThrowError();
@@ -48,7 +48,7 @@ describe('SQSConsumer', (): void => {
 
     it('should be able to create a new object of SQSConsumer with log level set to info', async (): Promise<void> => {
       expect(
-        (): SQSConsumer => new SQSConsumer({
+        (): SQSConsumer<any> => new SQSConsumer({
           logOptions: {
             logLevel: LogLevels.info,
           },
@@ -61,7 +61,7 @@ describe('SQSConsumer', (): void => {
 
     it('should be able to create a new object of SQSConsumer with log level set to debug', async (): Promise<void> => {
       expect(
-        (): SQSConsumer => new SQSConsumer({
+        (): SQSConsumer<any> => new SQSConsumer({
           logOptions: {
             logLevel: LogLevels.debug,
           },
@@ -74,7 +74,7 @@ describe('SQSConsumer', (): void => {
 
     it('should be able to create a new object of SQSConsumer with custom logger', async (): Promise<void> => {
       expect(
-        (): SQSConsumer => new SQSConsumer({
+        (): SQSConsumer<any> => new SQSConsumer({
           logOptions: {
             customLogger: logger,
           },
@@ -86,7 +86,7 @@ describe('SQSConsumer', (): void => {
 
     it('should be able to create a new object of SQSConsumer with max searches set', async (): Promise<void> => {
       expect(
-        (): SQSConsumer => new SQSConsumer({
+        (): SQSConsumer<any> => new SQSConsumer({
           sqsOptions: {
             ...sqsConsumerOpts,
             clientOptions: {
@@ -102,7 +102,7 @@ describe('SQSConsumer', (): void => {
 
     it('should error out if both custom logger and logger options are passed', async (): Promise<void> => {
       expect(
-        (): SQSConsumer => new SQSConsumer({
+        (): SQSConsumer<any> => new SQSConsumer({
           logOptions: {
             logLevel: LogLevels.info,
             customLogger: logger,
