@@ -40,11 +40,13 @@ jobs:
           ${{ runner.os }}-node-
     - run: npm ci
     - run: npm run build
+    - run: npm run coverage
     - uses: paambaati/codeclimate-action@v2.6.0
       env:
-        CC_TEST_REPORTER_ID: 2925ff1d6bb4dc3c921187525d6424bb0c446b0ba977a58d08cdb7cc46da8912
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
         coverageCommand: npm run coverage
+      if: ${{ github.repository == 'sshivananda/ts-sqs-consumer' }}
     - name: Self sast-scan NodeJS
       uses: AppThreat/sast-scan-action@master
       if: ${{ runner.os == 'Linux' }}
