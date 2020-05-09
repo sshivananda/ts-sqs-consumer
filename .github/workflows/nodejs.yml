@@ -28,6 +28,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmjs.org'
     - name: Get npm cache directory
       id: npm-cache
       run: |
@@ -61,8 +62,12 @@ jobs:
         path: reports
     - name: package-version-to-git-tag
       uses: pkgdeps/action-package-version-to-git-tag@v1
-      if: ${{ github.ref == 'refs/heads/master' }}
+      if: ${{ github.ref == 'refs/heads/master' && runner.os == 'Linux' && matrix.node-version == '12.x' }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         github_repo: ${{ github.repository }}
         git_commit_sha: ${{ github.sha }}
+    - run: npm publish --access public
+      if: ${{ github.ref == 'refs/heads/master' && runner.os == 'Linux' && matrix.node-version == '12.x' }}
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
