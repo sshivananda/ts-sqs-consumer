@@ -42,7 +42,7 @@ jobs:
     - run: npm run build
     - uses: paambaati/codeclimate-action@v2.6.0
       env:
-        CC_TEST_REPORTER_ID: 2925ff1d6bb4dc3c921187525d6424bb0c446b0ba977a58d08cdb7cc46da8912
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
         coverageCommand: npm run coverage
     - name: Self sast-scan NodeJS
