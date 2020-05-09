@@ -59,3 +59,10 @@ jobs:
       with:
         name: reports
         path: reports
+    - name: package-version-to-git-tag
+      uses: pkgdeps/action-package-version-to-git-tag@v1
+      if: ${{ github.ref == 'refs/heads/master' }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_repo: ${{ github.repository }}
+        git_commit_sha: ${{ github.sha }}
