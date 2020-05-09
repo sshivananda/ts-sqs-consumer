@@ -46,6 +46,7 @@ jobs:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
         coverageCommand: npm run coverage
+      if: ${{ github.repository == 'sshivananda/ts-sqs-consumer' }}
     - name: Self sast-scan NodeJS
       uses: AppThreat/sast-scan-action@master
       if: ${{ runner.os == 'Linux' }}
