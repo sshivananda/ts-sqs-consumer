@@ -46,7 +46,7 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
-        coverageCommand: npm install codeclimate-test-reporter && npm run coverage
+        coverageCommand: npm run coverage
       if: ${{ github.repository == 'sshivananda/ts-sqs-consumer' && runner.os == 'Linux' && matrix.node-version == '12.x'}}
     - name: Self sast-scan NodeJS
       uses: AppThreat/sast-scan-action@master
