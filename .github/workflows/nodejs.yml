@@ -40,6 +40,7 @@ jobs:
           ${{ runner.os }}-node-
     - run: npm ci
     - run: npm run build
+    - run: npm run coverage
     - uses: paambaati/codeclimate-action@v2.6.0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
