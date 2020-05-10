@@ -14,6 +14,13 @@ Typescript based sqs consumer. Handles message transport and deletion from SQS: 
 ## Usage
 
 ```ts
+import { SQSConsumer } from 'ts-sqs-consumer';
+
+type TestMessageType = {
+  orderId: string;
+  handle: string;
+};
+
 const tsSQSConsumer: SQSConsumer<TestMessageType> = new SQSConsumer({
     sqsOptions: {
       clientOptions: {
