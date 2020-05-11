@@ -42,6 +42,8 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm run coverage
+    - run: npm run can-publish
+      if: ${{ runner.os == 'Linux' && matrix.node-version == '12.x' }}
     - uses: paambaati/codeclimate-action@v2.6.0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
