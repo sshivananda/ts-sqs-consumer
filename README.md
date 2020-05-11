@@ -1,10 +1,17 @@
 # ts-sqs-consumer
 
+Build Stats:
+
 ![npm](https://img.shields.io/npm/dm/ts-sqs-consumer?style=for-the-badge)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sshivananda/ts-sqs-consumer/Node.js%20CI?style=for-the-badge)
+
+Maintainability stats:
+
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/sshivananda/ts-sqs-consumer?style=for-the-badge)
 ![Code Climate coverage](https://img.shields.io/codeclimate/coverage/sshivananda/ts-sqs-consumer?style=for-the-badge)
 ![Code Climate issues](https://img.shields.io/codeclimate/issues/sshivananda/ts-sqs-consumer?style=for-the-badge)
+
+Publish stats:
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/sshivananda/ts-sqs-consumer?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/sshivananda/ts-sqs-consumer?style=for-the-badge)
