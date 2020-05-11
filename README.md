@@ -16,6 +16,11 @@ Publish stats:
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/sshivananda/ts-sqs-consumer?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/sshivananda/ts-sqs-consumer?style=for-the-badge)
 
+Dependencies:
+
+![David - Dependencies](https://img.shields.io/david/sshivananda/ts-sqs-consumer?style=for-the-badge)
+![David - Dev Dependencies](https://img.shields.io/david/dev/sshivananda/ts-sqs-consumer?color=green&style=for-the-badge)
+
 Typescript based sqs consumer. Handles message transport and deletion from SQS: just add a handler function for the messages from SQS to get started.
 
 ## Usage
