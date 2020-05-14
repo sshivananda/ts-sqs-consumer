@@ -5,6 +5,7 @@ Build Stats:
 ![npm](https://img.shields.io/npm/dm/ts-sqs-consumer?style=for-the-badge)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sshivananda/ts-sqs-consumer/Node.js%20CI?style=for-the-badge)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/sshivananda/ts-sqs-consumer/issues)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer?ref=badge_shield)
 
 Maintainability stats:
 
@@ -59,3 +60,6 @@ const tsSQSConsumer: SQSConsumer<TestMessageType> = new SQSConsumer({
       throw err;
     });
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer?ref=badge_large)
