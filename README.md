@@ -3,7 +3,7 @@
 Build Stats:
 
 ![npm](https://img.shields.io/npm/dm/ts-sqs-consumer?style=for-the-badge)
-![GitHub Workflow Status (branch)](https://github.com/sshivananda/ts-sqs-consumer/workflows/Node.js%20CI/badge.svg)
+![GitHub Workflow Status (branch)](https://github.com/sshivananda/ts-sqs-consumer/workflows/Node.js%20CI/badge.svg?event=push)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/sshivananda/ts-sqs-consumer/issues)
 
 Maintainability stats:
