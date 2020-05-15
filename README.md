@@ -38,18 +38,24 @@ Dependencies:
 ## Background
 
 ---
-`ts-sqs-consumer` allows you to start processing messages from SQS by just passing in the connection configuration options and defining what needs to be done as part of the job processing.
+`ts-sqs-consumer` allows you to start processing messages from SQS by just
+passing in the connection configuration options and defining what needs to
+be done as part of the job processing.
 
 - Establishes a connection to the sqs queue
 - Longpolls for messages
 - If messages are found: processes them using the processor function used
 - If the message processing is successful: the message is deleted from the queue
 
-The library has a heavy emphasis on code quality and is integrated with the following tools:
+The library has a heavy emphasis on code quality and is integrated with
+the following tools:
 
 - Code Climate: for code quality and maintainability
-- FOSSA - for license check. Verfies that dependencies used in this library do not go beyond the license that this library adheres to. A detailed link is available in the [License](##License) section of the document.
-- Whitesource to scan for security vulnerabilities. Note that this does not currently cause build failures - but does get reported as an open issue.
+- FOSSA - for license check. Verfies that dependencies used in this library
+do not go beyond the license that this library adheres to. A detailed link
+is available in the [License](##License) section of the document.
+- Whitesource to scan for security vulnerabilities. Note that this does not
+currently cause build failures: but does get reported as an open issue.
 
 ## Installation
 
