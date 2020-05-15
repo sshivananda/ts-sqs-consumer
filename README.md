@@ -43,7 +43,7 @@ passing in the connection configuration options and defining what needs to
 be done as part of the job processing.
 
 - Establishes a connection to the sqs queue
-- Longpolls for messages
+- [Longpolls](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html) for messages
 - If messages are found: processes them using the processor function used
 - If the message processing is successful: the message is deleted from the queue
 
