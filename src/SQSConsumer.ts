@@ -2,7 +2,6 @@ import { SQSConsumerOptions } from './SQSConsumerOptions';
 import LogLevels from './logger/LogLevels';
 import { CustomLogger } from './logger/CustomLogger';
 import { ILogger } from './logger/ILogger';
-import { CustomLogOptions } from './logger/CustomLogOptions';
 import Logger from './logger/Logger';
 import { SQSMessage } from './message-processor/SQSMessage';
 import MessageProcessor from './message-processor/MessageProcessor';
@@ -25,29 +24,14 @@ export default class SQSConsumer<T extends SQSMessage> {
   constructor(options: SQSConsumerOptions & {
     jobProcessor: ((message: T) => Promise<void>)
   }) {
-    switch (true) {
-      case (options != null
-        && options.logOptions != null
-        && (options.logOptions as CustomLogOptions).logLevel != null
-        && (options.logOptions as CustomLogger).customLogger != null):
-        throw new Error('Either logLevel or customLogger should be specified - but not both.');
-      case (options != null
-        && options.logOptions != null
-        && (options.logOptions as CustomLogger).customLogger != null):
-        this.logger = (options!.logOptions as CustomLogger).customLogger;
-        break;
-      case (options != null
-        && options.logOptions != null
-        && (options.logOptions as CustomLogOptions).logLevel != null):
-        this.logger = new Logger({
-          logLevel: (options!.logOptions as CustomLogOptions).logLevel,
-        });
-        break;
-      default:
-        this.logger = new Logger({
-          logLevel: LogLevels.debug,
-        });
-        break;
+    if ((options != null
+      && options.logOptions != null
+      && (options.logOptions as CustomLogger).customLogger != null)) {
+      this.logger = (options!.logOptions as CustomLogger).customLogger;
+    } else {
+      this.logger = new Logger({
+        logLevel: LogLevels.debug,
+      });
     }
 
     this.messageProcessor = new MessageProcessor<T>({
