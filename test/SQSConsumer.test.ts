@@ -3,7 +3,6 @@ import winston from 'winston';
 import * as sinon from 'sinon';
 
 import SQSConsumer from '../src/SQSConsumer';
-import LogLevels from '../src/logger/LogLevels';
 import { SQSOptions } from '../src/sqs/SQSOptions';
 
 describe('SQSConsumer', (): void => {
@@ -50,38 +49,6 @@ describe('SQSConsumer', (): void => {
       expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
     });
 
-    it('should be able to create a new object of SQSConsumer with log level set to info', async (): Promise<void> => {
-      expect(
-        (): SQSConsumer<any> => new SQSConsumer({
-          logOptions: {
-            logLevel: LogLevels.info,
-          },
-          sqsOptions: sqsConsumerOpts,
-          jobProcessor: (async (message: any) => {
-            console.log(message);
-          }),
-        }),
-      ).not.toThrowError();
-      expect(createLoggerStub.callCount).toBe(1);
-      expect(createLoggerStub.getCalls()[0].args[0].level).toBe('info');
-    });
-
-    it('should be able to create a new object of SQSConsumer with log level set to debug', async (): Promise<void> => {
-      expect(
-        (): SQSConsumer<any> => new SQSConsumer({
-          logOptions: {
-            logLevel: LogLevels.debug,
-          },
-          sqsOptions: sqsConsumerOpts,
-          jobProcessor: (async (message: any) => {
-            console.log(message);
-          }),
-        }),
-      ).not.toThrowError();
-      expect(createLoggerStub.callCount).toBe(1);
-      expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
-    });
-
     it('should be able to create a new object of SQSConsumer with custom logger', async (): Promise<void> => {
       expect(
         (): SQSConsumer<any> => new SQSConsumer({
@@ -114,22 +81,6 @@ describe('SQSConsumer', (): void => {
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
       expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
-    });
-
-    it('should error out if both custom logger and logger options are passed', async (): Promise<void> => {
-      expect(
-        (): SQSConsumer<any> => new SQSConsumer({
-          logOptions: {
-            logLevel: LogLevels.info,
-            customLogger: logger,
-          },
-          sqsOptions: sqsConsumerOpts,
-          jobProcessor: (async (message: any) => {
-            console.log(message);
-          }),
-        }),
-      ).toThrowError();
-      expect(createLoggerStub.callCount).toBe(0);
     });
   });
 });
