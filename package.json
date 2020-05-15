@@ -27,6 +27,10 @@
         "aws sqs queue",
         "typescript sqs queue"
     ],
+    "bugs": {
+        "url": "https://github.com/sshivananda/ts-sqs-consumer/issues"
+    },
+    "homepage": "https://github.com/sshivananda/ts-sqs-consumer",
     "devDependencies": {
         "@types/jest": "^25.2.2",
         "@types/node": "^13.13.2",
