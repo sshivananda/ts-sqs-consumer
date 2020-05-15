@@ -17,7 +17,7 @@ Maintainability stats:
 Publish stats:
 
 ![npm](https://img.shields.io/npm/v/ts-sqs-consumer)
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/sshivananda/ts-sqs-consumer?label=GIT%20TAG)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/sshivananda/ts-sqs-consumer?label=Git%20Tag)
 ![GitHub](https://img.shields.io/github/license/sshivananda/ts-sqs-consumer)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer?ref=badge_shield)
 
