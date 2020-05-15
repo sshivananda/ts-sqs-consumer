@@ -12,7 +12,7 @@ Maintainability stats:
 
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/sshivananda/ts-sqs-consumer)
 ![Code Climate coverage](https://img.shields.io/codeclimate/coverage/sshivananda/ts-sqs-consumer)
-[![GitHub issues](https://img.shields.io/github/issues/sshivananda/ts-sqs-consumer?label=OPEN%20ISSUES)](https://github.com/sshivananda/ts-sqs-consumer/issues)
+[![GitHub issues](https://img.shields.io/github/issues/sshivananda/ts-sqs-consumer?label=Open%20Issues)](https://github.com/sshivananda/ts-sqs-consumer/issues)
 
 Publish stats:
 
