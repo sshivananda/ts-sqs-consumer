@@ -55,25 +55,42 @@ export default class SQSConsumer<T extends SQSMessage> {
           .catch((err: Error): void => {
             throw err;
           });
-        if (messages && messages.length > 0) {
-          for (const message of messages) {
-            await this
-              .jobProcessor(message)
-              .catch((err: Error): void => {
-                throw err;
-              });
-          }
-          await this.messageProcessor.markMessagesAsProcessed({
+        await this
+          .processAndDeleteMessages({
             messages: messages,
-          }).catch((err: Error): void => {
+          })
+          .catch((err: Error): void => {
             throw err;
           });
-        }
       } finally {
         searchCounter += 1;
       }
     }
 
     return searchCounter;
+  }
+
+  /**
+   * Processes messages one at a time and deletes them from
+   * sqs post processing
+   * @param options.messages Messages to be processed and deleted from queue
+   */
+  private async processAndDeleteMessages(options: {
+    messages: T[] | void
+  }): Promise<void> {
+    if (options.messages) {
+      for (const message of options.messages) {
+        await this
+          .jobProcessor(message)
+          .catch((err: Error): void => {
+            throw err;
+          });
+      }
+      await this.messageProcessor.markMessagesAsProcessed({
+        messages: options.messages,
+      }).catch((err: Error): void => {
+        throw err;
+      });
+    }
   }
 }
