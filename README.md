@@ -28,8 +28,6 @@ Dependencies:
 
 ## Table Of Contents
 
----
-
 - [Background](#background)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -37,7 +35,6 @@ Dependencies:
 
 ## Background
 
----
 `ts-sqs-consumer` allows you to start processing messages from SQS by just
 passing in the connection configuration options and defining what needs to
 be done as part of the job processing.
@@ -60,15 +57,11 @@ the following tools:
 
 ## Installation
 
----
-
 ```bash
 npm install ts-sqs-consumer
 ```
 
 ## Usage
-
----
 
 ```ts
 import { SQSConsumer } from 'ts-sqs-consumer';
@@ -111,5 +104,4 @@ const tsSQSConsumer: SQSConsumer<TestMessageType> = new SQSConsumer({
 
 ## License
 
----
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer?ref=badge_large)
