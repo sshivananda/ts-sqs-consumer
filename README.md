@@ -52,10 +52,10 @@ the following tools:
 
 - Code Climate: for code quality and maintainability
 - FOSSA - for license check. Verfies that dependencies used in this library
-do not go beyond the license that this library adheres to. A detailed link
-is available in the [License](##License) section of the document.
+  do not go beyond the license that this library adheres to. A detailed link
+  is available in the [License](##License) section of the document.
 - Whitesource to scan for security vulnerabilities. Note that this does not
-currently cause build failures: but does get reported as an open issue.
+  currently cause build failures: but does get reported as an open issue.
 
 ## Installation
 
