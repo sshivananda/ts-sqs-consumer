@@ -19,6 +19,14 @@
     },
     "author": "sshivananda",
     "license": "MIT",
+    "keywords": [
+        "sqs consumer",
+        "typescript sqs consumer",
+        "sqs long polling consumer",
+        "sqs queue",
+        "aws sqs queue",
+        "typescript sqs queue"
+    ],
     "devDependencies": {
         "@types/jest": "^25.2.2",
         "@types/node": "^13.13.2",
