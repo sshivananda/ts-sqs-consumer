@@ -56,8 +56,7 @@ export default class MessageProcessor<T extends SQSMessage> {
    * getMessages
    * Retrieves message from sqs
    */
-  public async getMessages(): Promise<T[] | undefined> {
-    const messages: T[] = [];
+  public async getMessages(): Promise<T[] | void> {
     const queryOutput: AWS.SQS.Types.ReceiveMessageResult | void = await this
       .sqsClient
       .receiveMessage({
@@ -70,27 +69,9 @@ export default class MessageProcessor<T extends SQSMessage> {
       .catch((err: Error): void => {
         throw err;
       });
-    if (queryOutput !== undefined
-      && queryOutput.Messages !== undefined) {
-      for (const sqsMessage of queryOutput.Messages) {
-        // Adding a try catch so that a single bad message does not halt processing
-        try {
-          if (sqsMessage.Body !== undefined) {
-            const sqsMessageData: T = <T> JSON.parse(sqsMessage.Body);
-            messages.push({
-              ...sqsMessageData,
-              handle: sqsMessage.ReceiptHandle,
-            });
-          }
-        } catch (err) {
-          this.logger.log(err);
-        }
-      }
-    } else {
-      this.logger.log('No valid message found');
-    }
-
-    return messages;
+    return this.getValidMessages({
+      queryOutput: queryOutput,
+    });
   }
 
   /**
@@ -119,5 +100,37 @@ export default class MessageProcessor<T extends SQSMessage> {
       });
 
     return true;
+  }
+
+  /**
+   * Given the output of sqs receive message
+   * returns the list of valid messages
+   * @param options.queryOutput Output of aws.sqs.receiveMessage
+   */
+  private async getValidMessages(options: {
+    queryOutput: AWS.SQS.Types.ReceiveMessageResult | void;
+  }): Promise<T[]> {
+    const validMessages: T[] = [];
+    if (options.queryOutput !== undefined
+      && options.queryOutput.Messages !== undefined) {
+      for (const sqsMessage of options.queryOutput.Messages) {
+        // Adding a try catch so that a single bad message does not halt processing
+        try {
+          if (sqsMessage.Body !== undefined) {
+            const sqsMessageData: T = <T> JSON.parse(sqsMessage.Body);
+            validMessages.push({
+              ...sqsMessageData,
+              handle: sqsMessage.ReceiptHandle,
+            });
+          }
+        } catch (err) {
+          this.logger.log(err);
+        }
+      }
+    } else {
+      this.logger.log('No valid message found');
+    }
+
+    return validMessages;
   }
 }

@@ -1,6 +1,7 @@
 # ts-sqs-consumer
 
-Typescript based sqs consumer. Handles message transport and deletion from SQS: just add a handler function for the messages from SQS to get started.
+Typescript based sqs consumer. Handles message transport and deletion from
+SQS: just add a handler function for the messages from SQS to get started.
 
 Build Stats:
 

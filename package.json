@@ -1,6 +1,6 @@
 {
     "name": "ts-sqs-consumer",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Typescript based SQS consumer",
     "main": "dist/index.js",
     "scripts": {
@@ -11,7 +11,8 @@
         "lint-fix": "eslint -c .eslintrc.js --ext .ts . --fix",
         "test": "jest --color=always",
         "coverage": "jest --color=always --coverage",
-        "can-publish": "can-npm-publish --verbose && exit $?"
+        "can-publish": "can-npm-publish --verbose && exit $?",
+        "postinstall": "rm -rf ./node_modules/jmespath/index.html"
     },
     "repository": {
         "type": "git",
@@ -42,13 +43,13 @@
         "eslint": "^7.0.0",
         "eslint-config-airbnb-typescript": "^7.2.1",
         "eslint-plugin-import": "^2.20.2",
-        "eslint-plugin-jest": "^23.11.0",
+        "eslint-plugin-jest": "^23.13.0",
         "eslint-plugin-security": "^1.4.0",
         "husky": "^4.2.5",
         "jest": "^26.0.1",
         "lint-staged": "^10.2.2",
         "sinon": "^9.0.2",
-        "ts-jest": "^25.5.1",
+        "ts-jest": "^26.0.0",
         "ts-node": "^8.10.1",
         "typescript": "^3.9.2"
     },
@@ -60,12 +61,12 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged",
+            "pre-commit": "npm run build && lint-staged",
             "pre-push": "npm run test --if-present"
         }
     },
     "dependencies": {
-        "aws-sdk": "^2.677.0",
+        "aws-sdk": "^2.678.0",
         "uuid": "^8.0.0",
         "winston": "^3.2.1"
     }

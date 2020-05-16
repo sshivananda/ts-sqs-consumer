@@ -54,7 +54,7 @@ describe('MessageProcessor', (): void => {
         logger: loggerObj,
         sqsOptions: sqsConsumerOpts,
       });
-      const messages: SampleMessageType[] | undefined = await messageProcessor.getMessages();
+      const messages: SampleMessageType[] | void = await messageProcessor.getMessages();
       expect(messages)
         .toStrictEqual([
           sampleMessage,
@@ -72,7 +72,7 @@ describe('MessageProcessor', (): void => {
         logger: loggerObj,
         sqsOptions: sqsConsumerOpts,
       });
-      const messages: SampleMessageType[] | undefined = await messageProcessor.getMessages();
+      const messages: SampleMessageType[] | void = await messageProcessor.getMessages();
       expect(messages)
         .toStrictEqual([]);
     });

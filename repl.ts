@@ -15,14 +15,15 @@ import { SQSConsumer } from './index';
  * should be imported directly. To run this script: use ./node_modules/.bin/ts-node repl.ts.
  */
 
+type TestMessageType = {
+  orderId: string;
+  handle: string;
+};
+
 /**
  * Provides sample usage of the sqs consumer.
  */
 async function testSQSConsumer(): Promise<void> {
-  type TestMessageType = {
-    orderId: string;
-    handle: string;
-  };
   const tsSQSConsumer: SQSConsumer<TestMessageType> = new SQSConsumer({
     sqsOptions: {
       clientOptions: {
