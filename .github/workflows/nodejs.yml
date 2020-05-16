@@ -7,6 +7,10 @@ on:
   push:
     branches:
       - '*'
+      - master
+      - release/*
+      - feature/*
+      - bugfix/*
   pull_request:
     branches: [ master ]
 
