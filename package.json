@@ -11,7 +11,8 @@
         "lint-fix": "eslint -c .eslintrc.js --ext .ts . --fix",
         "test": "jest --color=always",
         "coverage": "jest --color=always --coverage",
-        "can-publish": "can-npm-publish --verbose && exit $?"
+        "can-publish": "can-npm-publish --verbose && exit $?",
+        "postinstall": "rm -rf ./node_modules/jmespath/index.html"
     },
     "repository": {
         "type": "git",
