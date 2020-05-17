@@ -38,6 +38,9 @@ export default class SQSConsumer<T extends SQSMessage> {
       logger: this.logger,
       sqsOptions: options.sqsOptions,
     });
+    if (options.sqsOptions.receiveMessageOptions.maxSearches != null) {
+      this.maxSearches = options.sqsOptions.receiveMessageOptions.maxSearches;
+    }
     this.jobProcessor = options.jobProcessor;
   }
 
