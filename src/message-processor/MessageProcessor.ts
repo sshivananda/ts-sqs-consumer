@@ -18,7 +18,7 @@ export default class MessageProcessor<T extends SQSMessage> {
   private readonly logger: ILogger;
 
   // Instance of a SQS object
-  private sqsClient: SQS;
+  private sqsClient: SQS = new SQS();
 
   private readonly receiveMessageOptions: ReceiveMessageOptions;
 
@@ -45,7 +45,6 @@ export default class MessageProcessor<T extends SQSMessage> {
         });
         break;
       default:
-        this.sqsClient = new SQS();
         break;
     }
 
