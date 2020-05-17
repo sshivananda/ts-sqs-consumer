@@ -1,6 +1,5 @@
 import { SQSConsumerOptions } from './SQSConsumerOptions';
 import LogLevels from './logger/LogLevels';
-import { CustomLogger } from './logger/CustomLogger';
 import { ILogger } from './logger/ILogger';
 import Logger from './logger/Logger';
 import { SQSMessage } from './message-processor/SQSMessage';
@@ -24,15 +23,9 @@ export default class SQSConsumer<T extends SQSMessage> {
   constructor(options: SQSConsumerOptions & {
     jobProcessor: ((message: T) => Promise<void>)
   }) {
-    if ((options != null
-      && options.logOptions != null
-      && (options.logOptions as CustomLogger).customLogger != null)) {
-      this.logger = (options!.logOptions as CustomLogger).customLogger;
-    } else {
-      this.logger = new Logger({
-        logLevel: LogLevels.debug,
-      });
-    }
+    this.logger = new Logger({
+      logLevel: LogLevels.debug,
+    });
 
     this.messageProcessor = new MessageProcessor<T>({
       logger: this.logger,

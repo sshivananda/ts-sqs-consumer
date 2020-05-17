@@ -6,12 +6,6 @@ import SQSConsumer from '../src/SQSConsumer';
 import { SQSOptions } from '../src/sqs/SQSOptions';
 import MessageProcessor from '../src/message-processor/MessageProcessor';
 
-const logger: winston.Logger = winston.createLogger({
-  level: 'error',
-  transports: [
-    new winston.transports.Console(),
-  ],
-});
 describe('SQSConsumer', (): void => {
   const sqsConsumerOpts: SQSOptions = {
     clientOptions: {
@@ -50,21 +44,6 @@ describe('SQSConsumer', (): void => {
       ).not.toThrowError();
       expect(createLoggerStub.callCount).toBe(1);
       expect(createLoggerStub.getCalls()[0].args[0].level).toBe('debug');
-    });
-
-    it('should be able to create a new object of SQSConsumer with custom logger', async (): Promise<void> => {
-      expect(
-        (): SQSConsumer<any> => new SQSConsumer({
-          logOptions: {
-            customLogger: logger,
-          },
-          sqsOptions: sqsConsumerOpts,
-          jobProcessor: (async (message: any) => {
-            console.log(message);
-          }),
-        }),
-      ).not.toThrowError();
-      expect(createLoggerStub.callCount).toBe(0);
     });
   });
 
