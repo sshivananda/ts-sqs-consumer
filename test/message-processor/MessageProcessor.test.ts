@@ -35,6 +35,9 @@ describe('MessageProcessor', (): void => {
     },
   };
 
+  describe('Object creation', (): void => {
+  });
+
   describe('getMessage', (): void => {
     afterEach((): void => {
       AWSMock.restore('SQS', 'receiveMessage');
