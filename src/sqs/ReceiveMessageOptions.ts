@@ -1,4 +1,6 @@
 export type ReceiveMessageOptions = {
+  // Upper bound to the number of polls on the sqs queue
+  maxSearches?: number;
   // URL of the SQS queue
   queueUrl: string;
   // this passes through to WaitTimeSeconds param of the ReceiveMessage

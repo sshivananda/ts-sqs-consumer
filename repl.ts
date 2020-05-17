@@ -37,10 +37,12 @@ async function testSQSConsumer(): Promise<void> {
         stopAtFirstError: false,
       },
     },
-    jobProcessor: (async (message: TestMessageType) => {
-      console.log('Got message');
-      console.log(message);
-    }),
+    jobProcessorOptions: {
+      jobProcessor: (async (message: TestMessageType) => {
+        console.log('Got message');
+        console.log(message);
+      }),
+    },
   });
   await tsSQSConsumer
     .processPendingJobs()
