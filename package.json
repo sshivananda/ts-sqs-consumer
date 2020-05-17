@@ -62,7 +62,7 @@
     "husky": {
         "hooks": {
             "pre-commit": "npm run build && lint-staged",
-            "pre-push": "npm run test --if-present"
+            "pre-push": "npm run test && npm run can-publish"
         }
     },
     "dependencies": {
