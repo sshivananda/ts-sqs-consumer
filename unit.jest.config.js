@@ -10,6 +10,7 @@ module.exports = {
     'html',
     'lcov',
   ],
+  coverageDirectory: 'unitcoverage',
   coverageThreshold: {
     global: {
       branches: 90,

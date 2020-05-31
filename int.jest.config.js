@@ -13,6 +13,7 @@ module.exports = {
     'html',
     'lcov',
   ],
+  coverageDirectory: 'integrationcoverage',
   coverageThreshold: {
     global: {
       branches: 75,
