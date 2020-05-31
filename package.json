@@ -1,6 +1,6 @@
 {
     "name": "ts-sqs-consumer",
-    "version": "1.0.8",
+    "version": "1.1.0",
     "description": "Typescript based SQS consumer",
     "main": "dist/index.js",
     "scripts": {
@@ -9,8 +9,10 @@
         "validate": "npm run build && eslint -c .eslintrc.js --ext .ts .",
         "lint": "npm run build && eslint -c .eslintrc.js --ext .ts .",
         "lint-fix": "eslint -c .eslintrc.js --ext .ts . --fix",
-        "test": "jest --color=always",
-        "coverage": "jest --color=always --coverage",
+        "test": "jest --color=always --config=unit.jest.config.js",
+        "integration-test": "jest --color=always --config=int.jest.config.js --coverage --runInBand",
+        "run-integration-test": "sh run_integration_tests.sh",
+        "coverage": "jest --color=always --coverage --config=unit.jest.config.js",
         "can-publish": "can-npm-publish --verbose && exit $?",
         "postinstall": "rm -rf ./node_modules/jmespath/index.html"
     },
@@ -33,25 +35,28 @@
     },
     "homepage": "https://github.com/sshivananda/ts-sqs-consumer",
     "devDependencies": {
-        "@types/jest": "^25.2.2",
+        "@types/cucumber": "^6.0.1",
+        "@types/jest": "^25.2.3",
         "@types/node": "^13.13.2",
-        "@types/sinon": "^9.0.1",
-        "@types/uuid": "^7.0.3",
-        "@typescript-eslint/eslint-plugin": "^2.33.0",
+        "@types/sinon": "^9.0.4",
+        "@types/uuid": "^8.0.0",
+        "@typescript-eslint/eslint-plugin": "^3.0.2",
         "aws-sdk-mock": "^5.1.0",
         "can-npm-publish": "^1.3.2",
-        "eslint": "^7.0.0",
+        "cucumber": "^6.0.5",
+        "eslint": "^7.1.0",
         "eslint-config-airbnb-typescript": "^7.2.1",
         "eslint-plugin-import": "^2.20.2",
-        "eslint-plugin-jest": "^23.13.0",
+        "eslint-plugin-jest": "^23.13.2",
         "eslint-plugin-security": "^1.4.0",
         "husky": "^4.2.5",
         "jest": "^26.0.1",
-        "lint-staged": "^10.2.2",
+        "jest-cucumber": "^2.0.11",
+        "lint-staged": "^10.2.7",
         "sinon": "^9.0.2",
-        "ts-jest": "^26.0.0",
-        "ts-node": "^8.10.1",
-        "typescript": "^3.9.2"
+        "ts-jest": "^26.1.0",
+        "ts-node": "^8.10.2",
+        "typescript": "^3.9.3"
     },
     "lint-staged": {
         "*.{js,ts}": [
@@ -62,12 +67,12 @@
     "husky": {
         "hooks": {
             "pre-commit": "npm run build && lint-staged",
-            "pre-push": "npm run test && npm run can-publish"
+            "pre-push": "npm run test && npm run can-publish && npm run run-integration-test"
         }
     },
     "dependencies": {
-        "aws-sdk": "^2.678.0",
-        "uuid": "^8.0.0",
+        "aws-sdk": "^2.686.0",
+        "uuid": "^8.1.0",
         "winston": "^3.2.1"
     }
 }
