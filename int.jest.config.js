@@ -5,6 +5,10 @@ module.exports = {
     '/dist/',
     '/node_modules/',
   ],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/integration-test/',
+  ],
   testMatch: [
     '**/**/*.steps.ts',
   ],
