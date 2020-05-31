@@ -10,7 +10,7 @@
         "lint": "npm run build && eslint -c .eslintrc.js --ext .ts .",
         "lint-fix": "eslint -c .eslintrc.js --ext .ts . --fix",
         "test": "jest --color=always --config=unit.jest.config.js",
-        "integration-test": "jest --color=always --config=int.jest.config.js --coverage",
+        "integration-test": "jest --color=always --config=int.jest.config.js --coverage --runInBand",
         "run-integration-test": "sh run_integration_tests.sh",
         "coverage": "jest --color=always --coverage --config=unit.jest.config.js",
         "can-publish": "can-npm-publish --verbose && exit $?",
