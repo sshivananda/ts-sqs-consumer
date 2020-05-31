@@ -9,8 +9,10 @@
         "validate": "npm run build && eslint -c .eslintrc.js --ext .ts .",
         "lint": "npm run build && eslint -c .eslintrc.js --ext .ts .",
         "lint-fix": "eslint -c .eslintrc.js --ext .ts . --fix",
-        "test": "jest --color=always",
-        "coverage": "jest --color=always --coverage",
+        "test": "jest --color=always --config=unit.jest.config.js",
+        "integration-test": "jest --color=always --config=int.jest.config.js --coverage",
+        "run-integration-test": "sh run_integration_tests.sh",
+        "coverage": "jest --color=always --coverage --config=unit.jest.config.js",
         "can-publish": "can-npm-publish --verbose && exit $?",
         "postinstall": "rm -rf ./node_modules/jmespath/index.html"
     },
@@ -33,6 +35,7 @@
     },
     "homepage": "https://github.com/sshivananda/ts-sqs-consumer",
     "devDependencies": {
+        "@types/cucumber": "^6.0.1",
         "@types/jest": "^25.2.3",
         "@types/node": "^13.13.2",
         "@types/sinon": "^9.0.4",
@@ -48,6 +51,7 @@
         "eslint-plugin-security": "^1.4.0",
         "husky": "^4.2.5",
         "jest": "^26.0.1",
+        "jest-cucumber": "^2.0.11",
         "lint-staged": "^10.2.7",
         "sinon": "^9.0.2",
         "ts-jest": "^26.1.0",
