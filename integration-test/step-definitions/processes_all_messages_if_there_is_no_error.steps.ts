@@ -5,6 +5,23 @@ import { SQSConsumer } from '../..';
 
 const feature = loadFeature('./integration-test/features/processes_all_messages_if_there_is_no_error.feature');
 
+async function getTotalNumberOfMessagesInQueue(options: {
+  sqs: SQS;
+  queueUrl: string;
+}): Promise<number> {
+  const sqsQueueAttributes: SQS.GetQueueAttributesResult = await options.sqs.getQueueAttributes({
+    QueueUrl: options.queueUrl,
+    AttributeNames: [
+      'All',
+    ],
+  }).promise();
+  expect(sqsQueueAttributes.Attributes).toBeDefined();
+  const numberOfMessagesVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages, 10);
+  const numberOfMessagesDelayed: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesDelayed, 10);
+  const numberOfMessagesNotVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesNotVisible, 10);
+
+  return (numberOfMessagesVisible + numberOfMessagesDelayed + numberOfMessagesNotVisible);
+}
 jest.setTimeout(1200000);
 defineFeature(feature, test => {
   test('When there are no errors, processes all messages', ({ given, when, then }) => {
@@ -13,6 +30,7 @@ defineFeature(feature, test => {
       region: 'local',
     });
     const queueUrl: string = 'http://localhost:4566/queue/test_queue';
+    const dlqUrl: string = 'http://localhost:4566/queue/test_queue_dlq';
     type OrderDetails = {
       handle: string;
       orderId: string;
@@ -23,10 +41,16 @@ defineFeature(feature, test => {
       orderId: 'testId1',
       orderItemName: 'book',
     };
-
+    const mockJobProcessor = jest.fn().mockImplementation((async (message: OrderDetails) => {
+      console.log('Got message');
+      console.log(message);
+    }));
     given('there are messages in sqs queue', async (): Promise<void> => {
       await sqs.purgeQueue({
-        QueueUrl: queueUrl
+        QueueUrl: queueUrl,
+      }).promise();
+      await sqs.purgeQueue({
+        QueueUrl: dlqUrl,
       }).promise();
       Atomics.wait(
         new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1000
@@ -58,7 +82,7 @@ defineFeature(feature, test => {
       expect(currentNumberOfMessages).toBe(1);
     });
 
-    when('ts-sqs-consumer is invoked', async (): Promise<void> => {
+    when('ts-sqs-consumer is invoked and messages are processed successfully', async (): Promise<void> => {
       const tsSQSConsumer: SQSConsumer<OrderDetails> = new SQSConsumer({
         sqsOptions: {
           clientOptions: {
@@ -74,10 +98,7 @@ defineFeature(feature, test => {
           },
         },
         jobProcessorOptions: {
-          jobProcessor: (async (message: OrderDetails) => {
-            console.log('Got message');
-            console.log(message);
-          }),
+          jobProcessor: (async (message: OrderDetails) => mockJobProcessor(message)),
         },
       });
       await tsSQSConsumer
@@ -87,19 +108,18 @@ defineFeature(feature, test => {
         });
     });
 
-    then('all messages should be processed', async (): Promise<void> => {
-      const sqsQueueAttributes: SQS.GetQueueAttributesResult = await sqs.getQueueAttributes({
-        QueueUrl: queueUrl,
-        AttributeNames: [
-          'All',
-        ],
-      }).promise();
-      expect(sqsQueueAttributes.Attributes).toBeDefined();
-      const numberOfMessagesVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages, 10);
-      const numberOfMessagesDelayed: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesDelayed, 10);
-      const numberOfMessagesNotVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesNotVisible, 10);
-      const totalMessages: number = numberOfMessagesVisible + numberOfMessagesDelayed + numberOfMessagesNotVisible;
-      expect(totalMessages).toBe(0);
+    then('all messages should be processed without any messages going to DLQ', async (): Promise<void> => {
+      const totalMessagesInMainQueue: number = await getTotalNumberOfMessagesInQueue({
+        sqs: sqs,
+        queueUrl: queueUrl,
+      });
+      const totalMessagesInDLQ: number = await getTotalNumberOfMessagesInQueue({
+        sqs: sqs,
+        queueUrl: dlqUrl,
+      });
+      expect(totalMessagesInMainQueue).toBe(0);
+      expect(totalMessagesInDLQ).toBe(0);
+      expect(mockJobProcessor.mock.calls.length).toBe(1);
     });
   });
 });
