@@ -30,6 +30,6 @@ resource "aws_sqs_queue" "test_queue" {
   kms_data_key_reuse_period_seconds = 300
   redrive_policy                    = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.test_queue_dlq.arn
-    maxReceiveCount     = 4
+    maxReceiveCount     = 1
   })
 }
