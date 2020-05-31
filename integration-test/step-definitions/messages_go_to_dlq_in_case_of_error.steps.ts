@@ -2,27 +2,12 @@ import { SQS } from 'aws-sdk';
 import { defineFeature, loadFeature } from 'jest-cucumber';
 
 import { SQSConsumer } from '../..';
+import AWSHelper from '../AWSHelper';
 
 const feature = loadFeature('./integration-test/features/messages_go_to_dlq_in_case_of_error.feature');
 
-async function getTotalNumberOfMessagesInQueue(options: {
-  sqs: SQS;
-  queueUrl: string;
-}): Promise<number> {
-  const sqsQueueAttributes: SQS.GetQueueAttributesResult = await options.sqs.getQueueAttributes({
-    QueueUrl: options.queueUrl,
-    AttributeNames: [
-      'All',
-    ],
-  }).promise();
-  expect(sqsQueueAttributes.Attributes).toBeDefined();
-  const numberOfMessagesVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages, 10);
-  const numberOfMessagesDelayed: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesDelayed, 10);
-  const numberOfMessagesNotVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesNotVisible, 10);
-
-  return (numberOfMessagesVisible + numberOfMessagesDelayed + numberOfMessagesNotVisible);
-}
 jest.setTimeout(1200000);
+const awsHelper: AWSHelper = new AWSHelper();
 defineFeature(feature, test => {
   test('When there are errors, messages go to DLQ', ({ given, when, then }) => {
     const sqs: SQS = new SQS({
@@ -47,12 +32,9 @@ defineFeature(feature, test => {
       throw new Error('Random error');
     }));
     given('there are messages in sqs queue', async (): Promise<void> => {
-      await sqs.purgeQueue({
-        QueueUrl: queueUrl,
-      }).promise();
-      await sqs.purgeQueue({
-        QueueUrl: dlqUrl,
-      }).promise();
+      await awsHelper.purgeQueues({
+        sqs: sqs,
+      });
       Atomics.wait(
         new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1000
       );
@@ -113,11 +95,11 @@ defineFeature(feature, test => {
     });
 
     then('all messages should be processed and messages should go to the DLQ', async (): Promise<void> => {
-      const totalMessagesInMainQueue: number = await getTotalNumberOfMessagesInQueue({
+      const totalMessagesInMainQueue: number = await awsHelper.getTotalNumberOfMessagesInQueue({
         sqs: sqs,
         queueUrl: queueUrl,
       });
-      const totalMessagesInDLQ: number = await getTotalNumberOfMessagesInQueue({
+      const totalMessagesInDLQ: number = await awsHelper.getTotalNumberOfMessagesInQueue({
         sqs: sqs,
         queueUrl: dlqUrl,
       });
