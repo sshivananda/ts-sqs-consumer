@@ -20,6 +20,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       SERVICES: sqs,dynamodb
+      AWS_ACCESS_KEY_ID: fake
+      AWS_SECRET_ACCESS_KEY: fake
+      AWS_DEFAULT_REGION: local
 
     strategy:
       matrix:
