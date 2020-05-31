@@ -51,10 +51,13 @@ be done as part of the job processing.
 The library has a heavy emphasis on code quality and is integrated with
 the following tools:
 
-- Integrated with [local stack](https://localstack.cloud/) to run integration tests. This
-  ensures that the library is tested as it would be expected to be used in a live environment.
-- [Code Climate](https://codeclimate.com/github/sshivananda/ts-sqs-consumer/): for code quality and maintainability
-- [FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer) - for license check. Verfies that dependencies used in this library
+- Integrated with [local stack](https://localstack.cloud/) to run integration tests.
+  This ensures that the library is tested as it would be expected to be used in a
+  live environment.
+- [Code Climate](https://codeclimate.com/github/sshivananda/ts-sqs-consumer/): for
+  code quality and maintainability
+- [FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2Fsshivananda%2Fts-sqs-consumer) -
+  for license check. Verfies that dependencies used in this library
   do not go beyond the license that this library adheres to. A detailed link
   is available in the [License](##License) section of the document.
 - Whitesource to scan for security vulnerabilities. Note that this does not
