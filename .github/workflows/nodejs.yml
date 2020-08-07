@@ -52,7 +52,7 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
       if: ${{runner.os == 'Linux'}}
       with:
-        terraform_version: 0.12.29
+        terraform_version: 0.12.25
     - run: npm run run-integration-test
       if: ${{runner.os == 'Linux'}}
     - run: npm run can-publish
