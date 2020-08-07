@@ -1,9 +1,9 @@
 import { SQS } from 'aws-sdk';
 
 export default class AWSHelper {
-  public queueUrl: string = 'http://localhost:4576/queue/test_queue';
+  public queueUrl: string = 'http://localhost:4566/queue/test_queue';
 
-  public dlqUrl: string = 'http://localhost:4576/queue/test_queue_dlq';
+  public dlqUrl: string = 'http://localhost:4566/queue/test_queue_dlq';
 
   public async purgeQueues(options: {
     sqs: SQS;

@@ -14,11 +14,11 @@ const awsHelper: AWSHelper = new AWSHelper();
 defineFeature(feature, (test) => {
   test('When there are errors, messages go to DLQ', ({ given, when, then }) => {
     const sqs: SQS = new SQS({
-      endpoint: 'http://localhost:4576',
+      endpoint: 'http://localhost:4566',
       region: 'local',
     });
-    const queueUrl: string = 'http://localhost:4576/queue/test_queue';
-    const dlqUrl: string = 'http://localhost:4576/queue/test_queue_dlq';
+    const queueUrl: string = 'http://localhost:4566/queue/test_queue';
+    const dlqUrl: string = 'http://localhost:4566/queue/test_queue_dlq';
     type OrderDetails = {
       handle: string;
       orderId: string;
