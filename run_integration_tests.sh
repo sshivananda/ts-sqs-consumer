@@ -7,6 +7,7 @@ else
   echo "Could not start docker" >&2
   exit 1
 fi
+terraform --version
 terraform init
 if [ $? -eq 0 ]
 then
