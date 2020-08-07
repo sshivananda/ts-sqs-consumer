@@ -1,3 +1,9 @@
+terraform {
+  required_providers {
+    aws = "= 2.70.0"
+  }
+}
+
 provider "aws" {
   region                      = "us-east-1"
   access_key                  = "fake"

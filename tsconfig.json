@@ -21,5 +21,20 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowJs": true
-  }
+  },
+  "include": [
+    ".eslintrc.js",
+    "repl.ts",
+    "src/*",
+    "src/**/*",
+    "src/**/**/*",
+    "test/*",
+    "test/**/*",
+    "test/**/**/*",
+    "test/**/**/**/*",
+    "integration-test/*",
+    "integration-test/**/*",
+    "integration-test/**/**/*",
+    "integration-test/**/**/**/*",
+  ]
 }

@@ -1,4 +1,4 @@
-Feature: When there are no errors, processes all messages
+Feature: When there are no errors, all messages in the queue are processed
 
   Scenario: When there are no errors, processes all messages
     Given there are messages in sqs queue
