@@ -13,7 +13,7 @@ provider "aws" {
   version                     = "~> 2.64"
 
   endpoints {
-    sqs = "http://localhost:4566"
+    sqs = "http://localhost:4576"
   }
 }
 

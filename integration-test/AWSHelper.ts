@@ -1,19 +1,23 @@
 import { SQS } from 'aws-sdk';
 
 export default class AWSHelper {
-  public queueUrl: string = 'http://localhost:4566/queue/test_queue';
+  public queueUrl: string = 'http://localhost:4576/queue/test_queue';
 
-  public dlqUrl: string = 'http://localhost:4566/queue/test_queue_dlq';
+  public dlqUrl: string = 'http://localhost:4576/queue/test_queue_dlq';
 
   public async purgeQueues(options: {
     sqs: SQS;
   }): Promise<void> {
     await options.sqs.purgeQueue({
       QueueUrl: this.queueUrl,
-    }).promise();
+    }).promise().catch((err: Error) => {
+      throw err;
+    });
     await options.sqs.purgeQueue({
       QueueUrl: this.dlqUrl,
-    }).promise();
+    }).promise().catch((err: Error) => {
+      throw err;
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -26,7 +30,9 @@ export default class AWSHelper {
       AttributeNames: [
         'All',
       ],
-    }).promise();
+    }).promise().catch((err: Error) => {
+      throw err;
+    });
     // eslint-disable-next-line jest/no-standalone-expect
     expect(sqsQueueAttributes.Attributes).toBeDefined();
     const numberOfMessagesVisible: number = parseInt(

@@ -14,11 +14,11 @@ const awsHelper: AWSHelper = new AWSHelper();
 defineFeature(feature, (test) => {
   test('When there are errors, messages go to DLQ', ({ given, when, then }) => {
     const sqs: SQS = new SQS({
-      endpoint: 'http://localhost:4566',
+      endpoint: 'http://localhost:4576',
       region: 'local',
     });
-    const queueUrl: string = 'http://localhost:4566/queue/test_queue';
-    const dlqUrl: string = 'http://localhost:4566/queue/test_queue_dlq';
+    const queueUrl: string = 'http://localhost:4576/queue/test_queue';
+    const dlqUrl: string = 'http://localhost:4576/queue/test_queue_dlq';
     type OrderDetails = {
       handle: string;
       orderId: string;
@@ -37,6 +37,9 @@ defineFeature(feature, (test) => {
     given('there are messages in sqs queue', async (): Promise<void> => {
       await awsHelper.purgeQueues({
         sqs: sqs,
+      }).catch((err: Error) => {
+        console.log(err);
+        throw err;
       });
       Atomics.wait(
         new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1000,
@@ -44,7 +47,10 @@ defineFeature(feature, (test) => {
       await sqs.sendMessage({
         QueueUrl: queueUrl,
         MessageBody: JSON.stringify(bookOrder),
-      }).promise();
+      }).promise().catch((err: Error) => {
+        console.log(err);
+        throw err;
+      });
       let currentNumberOfMessages: number = -1;
       let retryAttemptsLeft: number = 20;
       do {
@@ -56,7 +62,10 @@ defineFeature(feature, (test) => {
           AttributeNames: [
             'All',
           ],
-        }).promise();
+        }).promise().catch((err: Error) => {
+          console.log(err);
+          throw err;
+        });
         expect(sqsQueueAttributes.Attributes).toBeDefined();
         expect(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages).toBeDefined();
         currentNumberOfMessages = parseInt(
@@ -92,6 +101,7 @@ defineFeature(feature, (test) => {
       await tsSQSConsumer
         .processPendingJobs()
         .catch((err: Error): void => {
+          console.log(err);
           throw err;
         });
       Atomics.wait(
@@ -103,10 +113,16 @@ defineFeature(feature, (test) => {
       const totalMessagesInMainQueue: number = await awsHelper.getTotalNumberOfMessagesInQueue({
         sqs: sqs,
         queueUrl: queueUrl,
+      }).catch((err: Error) => {
+        console.log(err);
+        throw err;
       });
       const totalMessagesInDLQ: number = await awsHelper.getTotalNumberOfMessagesInQueue({
         sqs: sqs,
         queueUrl: dlqUrl,
+      }).catch((err: Error) => {
+        console.log(err);
+        throw err;
       });
       expect(totalMessagesInMainQueue).toBe(0);
       expect(totalMessagesInDLQ).toBe(1);
