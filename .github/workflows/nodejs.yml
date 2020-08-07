@@ -49,10 +49,6 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm run coverage
-    - uses: hashicorp/setup-terraform@v1
-      if: ${{runner.os == 'Linux'}}
-      with:
-        terraform_version: 0.12.25
     - run: npm run run-integration-test
       if: ${{runner.os == 'Linux'}}
     - run: npm run can-publish
