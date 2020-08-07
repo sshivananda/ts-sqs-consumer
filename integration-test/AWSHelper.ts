@@ -16,6 +16,7 @@ export default class AWSHelper {
     }).promise();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public async getTotalNumberOfMessagesInQueue(options: {
     sqs: SQS;
     queueUrl: string;
@@ -26,10 +27,17 @@ export default class AWSHelper {
         'All',
       ],
     }).promise();
+    // eslint-disable-next-line jest/no-standalone-expect
     expect(sqsQueueAttributes.Attributes).toBeDefined();
-    const numberOfMessagesVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages, 10);
-    const numberOfMessagesDelayed: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesDelayed, 10);
-    const numberOfMessagesNotVisible: number = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesNotVisible, 10);
+    const numberOfMessagesVisible: number = parseInt(
+      sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages, 10,
+    );
+    const numberOfMessagesDelayed: number = parseInt(
+      sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesDelayed, 10,
+    );
+    const numberOfMessagesNotVisible: number = parseInt(
+      sqsQueueAttributes.Attributes!.ApproximateNumberOfMessagesNotVisible, 10,
+    );
 
     return (numberOfMessagesVisible + numberOfMessagesDelayed + numberOfMessagesNotVisible);
   }

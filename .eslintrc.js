@@ -13,7 +13,9 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
-    'object-shorthand' : 0,
+    '@typescript-eslint/camelcase': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'object-shorthand': 0,
     'no-await-in-loop': 0,
     // Overriding restricted syntax rule to remove for of from the blacklist
     'no-restricted-syntax': [
@@ -31,5 +33,5 @@ module.exports = {
         message: '`with` is disallowed in strict mode because it makes code impossible to predict and optimize.',
       },
     ],
-  }
+  },
 };

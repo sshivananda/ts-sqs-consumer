@@ -4,11 +4,14 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import { SQSConsumer } from '../..';
 import AWSHelper from '../AWSHelper';
 
+/* eslint-disable no-console */
+/* eslint-disable jest/no-test-callback */
+
 const feature = loadFeature('./integration-test/features/processes_all_messages_if_there_is_no_error.feature');
 
 jest.setTimeout(1200000);
 const awsHelper: AWSHelper = new AWSHelper();
-defineFeature(feature, test => {
+defineFeature(feature, (test) => {
   test('When there are no errors, processes all messages', ({ given, when, then }) => {
     const sqs: SQS = new SQS({
       endpoint: 'http://localhost:4566',
@@ -35,7 +38,7 @@ defineFeature(feature, test => {
         sqs: sqs,
       });
       Atomics.wait(
-        new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1000
+        new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1000,
       );
       await sqs.sendMessage({
         QueueUrl: queueUrl,
@@ -45,7 +48,7 @@ defineFeature(feature, test => {
       let retryAttemptsLeft: number = 20;
       do {
         Atomics.wait(
-          new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000
+          new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000,
         );
         const sqsQueueAttributes: SQS.GetQueueAttributesResult = await sqs.getQueueAttributes({
           QueueUrl: queueUrl,
@@ -55,8 +58,10 @@ defineFeature(feature, test => {
         }).promise();
         expect(sqsQueueAttributes.Attributes).toBeDefined();
         expect(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages).toBeDefined();
-        currentNumberOfMessages = parseInt(sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages, 10);
-        retryAttemptsLeft--;
+        currentNumberOfMessages = parseInt(
+          sqsQueueAttributes.Attributes!.ApproximateNumberOfMessages, 10,
+        );
+        retryAttemptsLeft -= 1;
       } while (
         (currentNumberOfMessages < 1)
         && (retryAttemptsLeft > 0)
