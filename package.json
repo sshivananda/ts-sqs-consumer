@@ -1,6 +1,6 @@
 {
     "name": "ts-sqs-consumer",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "description": "Typescript based SQS consumer",
     "main": "dist/index.js",
     "scripts": {

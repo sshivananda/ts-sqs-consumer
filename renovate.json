@@ -1,7 +1,12 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":semanticCommits",
+    ":preserveSemverRanges"
   ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "postUpgradeTasks": {
     "commands": ["npm version patch"]
   }
