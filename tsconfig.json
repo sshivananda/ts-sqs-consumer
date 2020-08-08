@@ -24,6 +24,8 @@
   },
   "include": [
     ".eslintrc.js",
+    "unit.jest.config.js",
+    "int.jest.config.js",
     "repl.ts",
     "src/*",
     "src/**/*",
