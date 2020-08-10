@@ -7,7 +7,5 @@
   "lockFileMaintenance": {
     "enabled": true
   },
-  "postUpgradeTasks": {
-    "commands": ["npm version patch"]
-  }
+  "bumpVersion": "patch"
 }
