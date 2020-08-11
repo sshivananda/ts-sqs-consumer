@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "config:base",
+    ":semanticCommits",
+    ":preserveSemverRanges"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "bumpVersion": "patch"
+}
