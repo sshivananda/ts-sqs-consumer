@@ -1,6 +1,6 @@
 terraform {
   required_providers {
-    aws = "= 2.70.0"
+    aws = "=3.1.0"
   }
 }
 
@@ -10,7 +10,7 @@ provider "aws" {
   secret_key                  = "fake"
   skip_requesting_account_id  = true
   skip_credentials_validation = true
-  version                     = "~> 2.64"
+  version                     = "~> 3.0"
 
   endpoints {
     sqs = "http://localhost:4566"
