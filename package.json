@@ -1,6 +1,6 @@
 {
     "name": "ts-sqs-consumer",
-    "version": "1.2.9",
+    "version": "1.2.10",
     "description": "Typescript based SQS consumer",
     "main": "dist/index.js",
     "scripts": {
@@ -55,7 +55,7 @@
         "lint-staged": "^10.2.11",
         "sinon": "^9.0.2",
         "ts-jest": "^26.1.4",
-        "ts-node": "^8.10.2",
+        "ts-node": "^9.0.0",
         "typescript": "^3.9.7"
     },
     "lint-staged": {
