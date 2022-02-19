@@ -71,7 +71,7 @@
         }
     },
     "dependencies": {
-        "aws-sdk": "^2.728.0",
+        "aws-sdk": "^2.1066.0",
         "uuid": "^8.3.0",
         "winston": "^3.3.3"
     }
