@@ -73,6 +73,6 @@
     "dependencies": {
         "aws-sdk": "^2.728.0",
         "uuid": "^8.3.0",
-        "winston": "^3.3.3"
+        "winston": "^3.5.0"
     }
 }
