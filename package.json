@@ -1,6 +1,6 @@
 {
     "name": "ts-sqs-consumer",
-    "version": "1.2.12",
+    "version": "1.2.13",
     "description": "Typescript based SQS consumer",
     "main": "dist/index.js",
     "scripts": {
@@ -37,7 +37,7 @@
     "devDependencies": {
         "@types/cucumber": "^6.0.1",
         "@types/jest": "^26.0.9",
-        "@types/node": "^14.0.27",
+        "@types/node": "^20.0.0",
         "@types/sinon": "^9.0.4",
         "@types/uuid": "^8.0.1",
         "@typescript-eslint/eslint-plugin": "^4.0.0",
