@@ -1,6 +1,6 @@
 {
     "name": "ts-sqs-consumer",
-    "version": "1.2.12",
+    "version": "1.2.13",
     "description": "Typescript based SQS consumer",
     "main": "dist/index.js",
     "scripts": {
@@ -47,7 +47,7 @@
         "eslint": "^7.6.0",
         "eslint-config-airbnb-typescript": "^12.0.0",
         "eslint-plugin-import": "^2.22.0",
-        "eslint-plugin-jest": "^24.0.0",
+        "eslint-plugin-jest": "^27.0.0",
         "eslint-plugin-security": "^1.4.0",
         "husky": "^4.2.5",
         "jest": "^26.2.2",
