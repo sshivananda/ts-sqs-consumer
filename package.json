@@ -1,6 +1,6 @@
 {
     "name": "ts-sqs-consumer",
-    "version": "1.2.12",
+    "version": "1.2.13",
     "description": "Typescript based SQS consumer",
     "main": "dist/index.js",
     "scripts": {
@@ -35,7 +35,7 @@
     },
     "homepage": "https://github.com/sshivananda/ts-sqs-consumer",
     "devDependencies": {
-        "@types/cucumber": "^6.0.1",
+        "@types/cucumber": "^7.0.0",
         "@types/jest": "^26.0.9",
         "@types/node": "^14.0.27",
         "@types/sinon": "^9.0.4",
